@@ -2,27 +2,26 @@
 
 # Current apache hadoop releases: http://hadoop.apache.org/releases.html
 
-HADOOP_26_VERSION = 2.6.5
-HADOOP_27_VERSION = 2.7.3
+HADOOP_28_VERSION = 2.8.2
 PROTOBUF_VERSION = 2.5.0
 
 DOCKER = docker
-DOCKER_REPO = danisla/hadoop
+DOCKER_REPO = ezalenski/arm64v8-hadoop
 
 all: build
 
 ### Build hadoop 2.6 and 2.7 images with native libs.
-build: build-$(HADOOP_26_VERSION) build-$(HADOOP_27_VERSION)
+build: build-$(HADOOP_28_VERSION)
 build-%: hadoop-native-%.tar
 	$(DOCKER) build -t hadoop:$* \
 	--build-arg HADOOP_VERSION=$* \
 	.
 
-tag: tag-$(HADOOP_26_VERSION) tag-$(HADOOP_27_VERSION)
+tag: tag-$(HADOOP_28_VERSION)
 tag-%:
 	$(DOCKER) tag hadoop:$* $(DOCKER_REPO):$*
 
-push: push-$(HADOOP_26_VERSION) push-$(HADOOP_27_VERSION)
+push: push-$(HADOOP_28_VERSION)
 push-%:
 	$(DOCKER) push $(DOCKER_REPO):$*
 
@@ -57,5 +56,5 @@ native_libs_%: hadoop-%-src.tar.gz protobuf-$(PROTOBUF_VERSION).tar.bz2
 ### Extract native libs from previous compile target
 hadoop-native-%.tar: native_libs_% hadoop-%.tar.gz
 	$(DOCKER) run --rm \
-	 	-e HADOOP_VERSION=$* \
+		-e HADOOP_VERSION=$* \
 		hadoop-nativelibs:$* > hadoop-native-$*.tar

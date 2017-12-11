@@ -1,4 +1,4 @@
-FROM java:8-jre
+FROM arm64v8/openjdk:8-jre-alpine
 
 # Add native libs
 ARG HADOOP_VERSION=
