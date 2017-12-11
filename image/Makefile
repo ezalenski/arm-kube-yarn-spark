@@ -6,7 +6,7 @@ HADOOP_28_VERSION = 2.8.2
 PROTOBUF_VERSION = 2.5.0
 
 DOCKER = docker
-DOCKER_REPO = ezalenski/arm64v8-hadoop
+DOCKER_REPO = ezalenski/arm32v7-hadoop
 
 all: build
 
