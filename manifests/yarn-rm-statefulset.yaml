@@ -55,10 +55,10 @@ spec:
            - "-d"
         resources:
           requests:
-            memory: "440Mi"
+            memory: "400Mi"
             cpu: "100m"
           limits:
-            memory: "881Mi"
+            memory: "880Mi"
             cpu: "2000m"
         volumeMounts:
           - name: hadoop-config
