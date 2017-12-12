@@ -2,41 +2,43 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: zeppelin
+  name: spark
   namespace: yarn-cluster
   labels:
-    component: zeppelin
+    component: spark
 spec:
   type: NodePort
   ports:
+  - port: 7077
+    name: spark
   - port: 8080
     name: web
   # *.zeppelin.yarn-cluster.svc.cluster.local
   selector:
-    component: zeppelin
+    component: spark
 ---
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: zeppelin
+  name: spark
 spec:
-  serviceName: "zeppelin"
+  serviceName: "spark"
   replicas: 1
   template:
     metadata:
       labels:
-        component: zeppelin
+        component: spark
     spec:
       terminationGracePeriodSeconds: 0
       containers:
-      - name: zeppelin
-        image: dylanmei/zeppelin:0.7.2
+      - name: spark
+        image: ezalenski/arm32v7-spark:2.2.1
         env:
-        - name: ZEPPELIN_PORT
+        - name: SPARK_PORT
           value: "8080"
         - name: MASTER
           value: "yarn"
-        - name: ZEPPELIN_JAVA_OPTS
+        - name: SPARK_JAVA_OPTS
           value: >-
             -Dspark.driver.memory=512m
             -Dspark.executor.memory=512m
@@ -46,7 +48,7 @@ spec:
             --num-executors 2
         resources:
           requests:
-            memory: "1024Mi"
+            memory: "512Mi"
             cpu: "1000m"
           limits:
             memory: "1024Mi"
