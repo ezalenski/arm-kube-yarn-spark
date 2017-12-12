@@ -22,7 +22,7 @@ metadata:
   name: hdfs-dn
 spec:
   serviceName: "hdfs-dn"
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
