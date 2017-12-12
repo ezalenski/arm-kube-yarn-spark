@@ -144,7 +144,7 @@ pf-rm: wait-for-pod-yarn-rm-0
 	$(KUBECTL) port-forward yarn-rm-0 8088:8088 2>/dev/null &
 
 pf-spark: wait-for-pod-spark-0
-	$(KUBECTL) port-forward spark-0 8081:8080 2>/dev/null &
+	$(KUBECTL) port-forward spark-0 8081:4040 2>/dev/null &
 
 pf: pf-rm pf-spark
 

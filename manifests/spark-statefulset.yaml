@@ -11,8 +11,8 @@ spec:
   ports:
   - port: 7077
     name: spark
-  - port: 8080
-    name: web
+  - port: 4040
+    name: ui
   # *.zeppelin.yarn-cluster.svc.cluster.local
   selector:
     component: spark
@@ -34,8 +34,8 @@ spec:
       - name: spark
         image: ezalenski/arm32v7-spark:2.2.1
         ports:
-          - containerPort: 8080
-            name: web
+          - containerPort: 4040
+            name: ui
           - containerPort: 7077
             name: spark
         command:
@@ -43,25 +43,19 @@ spec:
           - "/tmp/hadoop-config/bootstrap.sh"
           - "-d"
         env:
-        - name: SPARK_PORT
-          value: "8080"
         - name: MASTER
           value: "yarn"
-        - name: SPARK_JAVA_OPTS
-          value: >-
-            -Dspark.driver.memory=512m
-            -Dspark.executor.memory=512m
         - name: SPARK_SUBMIT_OPTIONS
           value: >-
             --deploy-mode client
             --num-executors 2
         resources:
           requests:
-            memory: "512Mi"
-            cpu: "1000m"
-          limits:
             memory: "1024Mi"
             cpu: "2000m"
+          limits:
+            memory: "1024Mi"
+            cpu: "4000m"
         volumeMounts:
           - name: hadoop-config
             mountPath: /tmp/hadoop-config
