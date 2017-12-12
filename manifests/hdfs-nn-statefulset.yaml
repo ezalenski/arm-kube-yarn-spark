@@ -31,17 +31,17 @@ spec:
       terminationGracePeriodSeconds: 0
       containers:
       - name: hdfs-nn
-        image: danisla/hadoop:2.7.3
+        image: ezalenski/arm32v7-hadoop:2.8.2
         command:
            - "/bin/bash"
            - "/tmp/hadoop-config/bootstrap.sh"
            - "-d"
         resources:
           requests:
-            memory: "1024Mi"
+            memory: "512Mi"
             cpu: "100m"
           limits:
-            memory: "2048Mi"
+            memory: "1024Mi"
             cpu: "1000m"
         volumeMounts:
           - name: hadoop-config

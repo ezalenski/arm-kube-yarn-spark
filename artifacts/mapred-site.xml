@@ -7,6 +7,18 @@
     <value>yarn</value>
   </property>
   <property>
+    <name>mapreduce.map.memory.mb</name>
+    <value>512</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.memory.mb</name>
+    <value>512</value>
+  </property>
+  <property>
+    <name>yarn.app.mapreduce.am.resource.mb</name>
+    <value>512</value>
+  </property>
+  <property>
     <name>mapreduce.jobhistory.address</name>
     <value>yarn-rm-0.yarn-rm.yarn-cluster.svc.cluster.local:10020</value>
   </property>
