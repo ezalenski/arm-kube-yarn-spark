@@ -51,7 +51,7 @@ spec:
             --num-executors 2
         resources:
           requests:
-            memory: "1024Mi"
+            memory: "800Mi"
             cpu: "2000m"
           limits:
             memory: "1024Mi"
