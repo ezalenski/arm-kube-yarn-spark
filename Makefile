@@ -25,8 +25,8 @@ HDFS_FILES=$(addprefix $(MANIFESTS)/,$(HDFS_FILES_BASE))
 YARN_FILES_BASE=yarn-rm-statefulset.yaml yarn-nm-statefulset.yaml
 YARN_FILES=$(addprefix $(MANIFESTS)/,$(YARN_FILES_BASE))
 
-ZEPPELIN_FILES_BASE=zeppelin-statefulset.yaml
-ZEPPELIN_FILES=$(addprefix $(MANIFESTS)/,$(ZEPPELIN_FILES_BASE))
+SPARK_FILES_BASE=spark-statefulset.yaml
+SPARK_FILES=$(addprefix $(MANIFESTS)/,$(SPARK_FILES_BASE))
 
 all: init create-apps
 init: create-ns create-configmap
@@ -85,8 +85,8 @@ get-configmap: kubectl
 
 
 ### All apps
-create-apps: create-hdfs create-yarn create-zeppelin
-delete-apps: delete-zeppelin delete-yarn delete-hdfs
+create-apps: create-hdfs create-yarn create-spark
+delete-apps: delete-spark delete-yarn delete-hdfs
 
 
 ### HDFS
@@ -105,9 +105,9 @@ scale-nm: kubectl
 	IN="" && until [ -n "$$IN" ]; do read -p "Enter number of YARN Node Manager replicas (current: $$CURR): " IN; done ; \
 	$(KUBECTL) patch statefulset yarn-nm -p '{"spec":{"replicas": '$$IN'}}'
 
-### Zeppelin
-create-zeppelin: $(ZEPPELIN_FILES)
-delete-zeppelin: delete-zeppelin-pf $(addsuffix .delete,$(ZEPPELIN_FILES)) delete-statefulset-pods-zeppelin
+### Spark
+create-spark: $(SPARK_FILES)
+delete-spark: delete-spark-pf $(addsuffix .delete,$(SPARK_FILES)) delete-statefulset-pods-spark
 
 ### Helper targets
 get-ns: kubectl
@@ -143,15 +143,15 @@ get-yarn-nodes: wait-for-pod-yarn-rm-0
 pf-rm: wait-for-pod-yarn-rm-0
 	$(KUBECTL) port-forward yarn-rm-0 8088:8088 2>/dev/null &
 
-pf-zeppelin: wait-for-pod-zeppelin-0
-	$(KUBECTL) port-forward zeppelin-0 8081:8080 2>/dev/null &
+pf-spark: wait-for-pod-spark-0
+	$(KUBECTL) port-forward spark-0 8081:8080 2>/dev/null &
 
-pf: pf-rm pf-zeppelin
+pf: pf-rm pf-spark
 
 delete-%-pf: kubectl
 	-pkill -f "kubectl.*port-forward.*$*.*"
 
-delete-pf: kubectl delete-zeppelin-pf delete-yarn-rm-pf
+delete-pf: kubectl delete-spark-pf delete-yarn-rm-pf
 
 HADOOP_VERSION=$(shell grep "image: " manifests/yarn-rm-statefulset.yaml|cut -d'/' -f2|cut -d ':' -f2)
 test: wait-for-pod-yarn-nm-0
