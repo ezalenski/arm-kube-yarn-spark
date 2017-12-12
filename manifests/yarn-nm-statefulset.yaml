@@ -23,7 +23,7 @@ metadata:
   name: yarn-nm
 spec:
   serviceName: "yarn-nm"
-  replicas: 2
+  replicas: 6
   template:
     metadata:
       labels:
@@ -42,10 +42,10 @@ spec:
            - "-d"
         resources:
           requests:
-            memory: "512Mi"
+            memory: "441Mi"
             cpu: "100m"
           limits:
-            memory: "1024Mi"
+            memory: "882Mi"
             cpu: "4000m"
         env:
           - name: MY_CPU_LIMIT
