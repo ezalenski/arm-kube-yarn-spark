@@ -24,7 +24,7 @@
   </property>
   <property>
     <name>yarn.scheduler.maximum-allocation-mb</name>
-    <value>512</value>
+    <value>1024</value>
   </property>
   <property>
     <name>yarn.scheduler.maximum-allocation-vcores</name>
