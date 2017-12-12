@@ -12,7 +12,7 @@ all: build
 
 ### Build hadoop 2.6 and 2.7 images with native libs.
 build: build-$(HADOOP_28_VERSION)
-build-%: hadoop-%.tar
+build-%: hadoop-%.tar.gz
 	$(DOCKER) build -t hadoop:$* \
 	--build-arg HADOOP_VERSION=$* \
 	.

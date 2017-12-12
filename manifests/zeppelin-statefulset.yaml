@@ -38,8 +38,8 @@ spec:
           value: "yarn"
         - name: ZEPPELIN_JAVA_OPTS
           value: >-
-            -Dspark.driver.memory=1g
-            -Dspark.executor.memory=1g
+            -Dspark.driver.memory=512m
+            -Dspark.executor.memory=512m
         - name: SPARK_SUBMIT_OPTIONS
           value: >-
             --deploy-mode client
@@ -49,11 +49,11 @@ spec:
             memory: "1024Mi"
             cpu: "1000m"
           limits:
-            memory: "4096Mi"
+            memory: "1024Mi"
             cpu: "2000m"
         volumeMounts:
           - name: hadoop-config
-            mountPath: /usr/hadoop-2.7.3/etc/hadoop
+            mountPath: /usr/hadoop-2.8.2/etc/hadoop
       volumes:
         - name: hadoop-config
           configMap:

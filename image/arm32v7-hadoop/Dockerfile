@@ -15,7 +15,8 @@ ENV HADOOP_PREFIX=/usr/local/hadoop \
 
 RUN \
   cd /usr/local && ln -s ./hadoop-${HADOOP_VERSION} hadoop && \
-  rm -f ${HADOOP_PREFIX}/logs/*
+  rm -f ${HADOOP_PREFIX}/logs/* && \
+  rm -rf ${HADOOP_PREFIX}/lib/native/
 
 WORKDIR $HADOOP_PREFIX
 
