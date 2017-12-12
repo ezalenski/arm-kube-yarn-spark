@@ -3,7 +3,6 @@ FROM arm32v7/openjdk:8-jre
 # Add native libs
 ARG HADOOP_VERSION=
 ADD hadoop-${HADOOP_VERSION}.tar.gz /usr/local
-ADD hadoop-native-${HADOOP_VERSION}.tar /usr/local/hadoop-${HADOOP_VERSION}/lib/native
 
 ENV HADOOP_PREFIX=/usr/local/hadoop \
     HADOOP_COMMON_HOME=/usr/local/hadoop \
